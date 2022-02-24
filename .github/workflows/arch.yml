@@ -2,8 +2,11 @@ name: Publish Arch to Docker Hub
 
 on:
   push:
+    branches:
+      - main
     paths:
       - "Arch/*"
+      - ".github/workflows/arch.yml"
   schedule:
     - cron: '0 0 * * 1'
 

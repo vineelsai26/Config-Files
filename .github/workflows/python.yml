@@ -2,8 +2,11 @@ name: Publish Python to Docker Hub
 
 on:
   push:
+    branches:
+      - main
     paths:
       - "Python/*"
+      - ".github/workflows/python.yml"
   schedule:
     - cron: '0 0 * * 1'
 

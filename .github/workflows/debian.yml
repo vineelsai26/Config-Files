@@ -2,8 +2,11 @@ name: Publish Debian to Docker Hub
 
 on:
   push:
+    branches:
+      - main
     paths:
       - "Debian/*"
+      - ".github/workflows/debian.yml"
   schedule:
     - cron: '0 0 * * 1'
 

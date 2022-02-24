@@ -2,8 +2,11 @@ name: Publish Ubuntu to Docker Hub
 
 on:
   push:
+    branches:
+      - main
     paths:
       - "Ubuntu/*"
+      - ".github/workflows/ubuntu.yml"
   schedule:
     - cron: '0 0 * * 1'
 

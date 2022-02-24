@@ -2,8 +2,11 @@ name: Publish Fedora to Docker Hub
 
 on:
   push:
+    branches:
+      - main
     paths:
       - "Fedora/*"
+      - ".github/workflows/fedora.yml"
   schedule:
     - cron: '0 0 * * 1'
 

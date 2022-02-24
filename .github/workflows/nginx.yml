@@ -2,8 +2,11 @@ name: Publish Nginx to Docker Hub
 
 on:
   push:
+    branches:
+      - main
     paths:
       - "Nginx/*"
+      - ".github/workflows/nginx.yml"
   schedule:
     - cron: '0 0 * * 1'
 
