@@ -30,7 +30,7 @@ jobs:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_TOKEN }}
 
-      - name: Build and Push Python Image
+      - name: Build and Push NodeJs Image
         uses: docker/build-push-action@v2
         with:
           platforms: linux/amd64, linux/arm64
