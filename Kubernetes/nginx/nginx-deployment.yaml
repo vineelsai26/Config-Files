@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+spec:
+  replicas: 10
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: vineelsai/nginx:latest
+        volumeMounts:
+        - mountPath: /usr/share/nginx/html
+          name: nginx-html
+        ports:
+        - containerPort: 80
+          protocol: TCP
+          name: nginx-port
+        imagePullPolicy: Always
+      volumes:
+      - name: nginx-html
+        hostPath:
+          path: /home/ubuntu/nginx-html

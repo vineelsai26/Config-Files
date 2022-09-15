@@ -1,0 +1,37 @@
+---
+- name: Docker Essential Containers Setup
+  hosts: localhost
+  tasks:
+    - name: Deploy Portainer
+      docker_container:
+        name: portainer
+        image: portainer/portainer-ce
+        ports:
+          - "9443:9443"
+        volumes:
+          - /var/run/docker.sock:/var/run/docker.sock
+          - portainer_data:/data
+        restart_policy: always
+
+    - name: Deploy Watchtower
+      docker_container:
+        name: watchtower
+        image: containrrr/watchtower
+        command: --schedule "0 0 4 * * *" --debug
+        volumes:
+          - /var/run/docker.sock:/var/run/docker.sock
+          - /home/ubuntu/.docker/config.json:/config.json
+        restart_policy: always
+
+    - name: Deploy Nginx Proxy Manager
+      docker_container:
+        name: nginx-proxy-manager
+        image: jc21/nginx-proxy-manager
+        ports:
+          - "80:80"
+          - "81:81"
+          - "443:443"
+        volumes:
+          - nginx_proxy_manager_data:/data
+          - nginx_proxy_manager_data:/etc/letsencrypt
+        restart_policy: always

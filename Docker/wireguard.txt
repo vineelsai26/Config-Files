@@ -1,0 +1,21 @@
+docker run -d \
+  --network host \
+  --name=wireguard \
+  --cap-add=NET_ADMIN \
+  --cap-add=SYS_MODULE \
+  -e PUID=1001 \
+  -e PGID=1001 \
+  -e TZ=Asia/Kolkata \
+  -e SERVERURL=150.230.138.158 `#optional` \
+  -e SERVERPORT=51820 `#optional` \
+  -e PEERS=1 `#optional` \
+  -e PEERDNS=auto `#optional` \
+  -e INTERNAL_SUBNET=10.13.13.0 `#optional` \
+  -e ALLOWEDIPS=0.0.0.0/0 `#optional` \
+  -e LOG_CONFS=true `#optional` \
+  -p 51820:51820/udp \
+  -v wireguard_config:/config \
+  -v wireguard_modules:/lib/modules \
+  --sysctl="net.ipv4.conf.all.src_valid_mark=1" \
+  --restart unless-stopped \
+  linuxserver/wireguard

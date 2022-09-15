@@ -1,0 +1,11 @@
+---
+- name: Create User
+  hosts: localhost
+  tasks:
+    - name: Add the user Ubuntu
+      ansible.builtin.user:
+        name: ubuntu
+        comment: Ubuntu Server
+        groups: sudo
+        createhome: yes
+        home: /home/ubuntu
