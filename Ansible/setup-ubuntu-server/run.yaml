@@ -3,3 +3,4 @@
 - import_playbook: create-user.yaml
 - import_playbook: docker-install.yaml
 - import_playbook: docker-essential-containers.yaml
+- import_playbook: install-nala.yaml
