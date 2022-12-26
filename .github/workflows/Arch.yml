@@ -1,14 +1,14 @@
-name: Publish C to Docker Hub
+name: Publish Arch to Docker Hub
 
 on:
   push:
     branches:
       - main
     paths:
-      - "C/*"
-      - ".github/workflows/c.yml"
+      - "Arch/*"
+      - ".github/workflows/Arch.yml"
   schedule:
-    - cron: '0 0 * * 1'
+    - cron: "0 0 * * 1"
 
 jobs:
   build:
@@ -30,10 +30,10 @@ jobs:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_TOKEN }}
 
-      - name: Build and Push C Image
+      - name: Build and Push Arch Image
         uses: docker/build-push-action@v3
         with:
-          platforms: linux/amd64, linux/arm64
+          platforms: linux/amd64
           push: true
-          tags: vineelsai/gcc:latest
-          file: ./C/Dockerfile
+          tags: vineelsai/arch:latest
+          file: ./Arch/Dockerfile

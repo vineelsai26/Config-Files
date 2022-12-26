@@ -9,7 +9,7 @@ updates:
     directory: "/" # Location of package manifests
     schedule:
       interval: "weekly"
-    assignees: 
+    assignees:
       - "vineelsai26"
     commit-message:
       prefix: "github-actions"

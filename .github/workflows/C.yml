@@ -1,14 +1,14 @@
-name: Publish NodeJs to Docker Hub
+name: Publish C to Docker Hub
 
 on:
   push:
     branches:
       - main
     paths:
-      - "NodeJs/*"
-      - ".github/workflows/node.yml"
+      - "C/*"
+      - ".github/workflows/C.yml"
   schedule:
-    - cron: '0 0 * * 1'
+    - cron: "0 0 * * 1"
 
 jobs:
   build:
@@ -30,10 +30,10 @@ jobs:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_TOKEN }}
 
-      - name: Build and Push NodeJs Image
+      - name: Build and Push C Image
         uses: docker/build-push-action@v3
         with:
           platforms: linux/amd64, linux/arm64
           push: true
-          tags: vineelsai/nodejs:latest
-          file: ./NodeJs/Dockerfile
+          tags: vineelsai/gcc:latest
+          file: ./C/Dockerfile
