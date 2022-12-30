@@ -1,7 +1,11 @@
 import { Octokit } from "octokit"
+import { exec } from "child_process"
+import fs from "fs"
+import path from "path"
 import "dotenv/config"
 
 const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN })
+const baseDir = "C:\\Users\\Vineel\\GoogleDrive\\GitHub"
 
 interface OrganizationData {
 	organization: {
@@ -27,6 +31,37 @@ const orgs = ["VsTechDev"]
 
 const users = ["vineelsai26"]
 
+const cloneRepo = (url: string) => {
+	const repoPath = path.join(baseDir, url.split("/")[3], url.split("/")[4])
+	const repoGitPath = path.join(repoPath, ".git")
+	if (fs.existsSync(repoPath) && fs.existsSync(repoGitPath)) {
+		exec(`cd ${repoPath} && git pull`, (err, stdout, stderr) => {
+			if (err) {
+				console.log(err)
+			}
+			console.log(stdout)
+			console.log(stderr)
+		})
+	} else if (!fs.existsSync(repoGitPath)) {
+		exec(`cd ${repoPath} && git clone ${url} .`, (err, stdout, stderr) => {
+			if (err) {
+				console.log(err)
+			}
+			console.log(stdout)
+			console.log(stderr)
+		})
+	} else {
+		fs.mkdirSync(repoPath, { recursive: true })
+		exec(`cd ${repoPath} && git clone ${url} .`, (err, stdout, stderr) => {
+			if (err) {
+				console.log(err)
+			}
+			console.log(stdout)
+			console.log(stderr)
+		})
+	}
+}
+
 for (const org of orgs) {
 	const organizationData: OrganizationData = await octokit.graphql(`query {
 		organization(login: "${org}") {
@@ -39,7 +74,7 @@ for (const org of orgs) {
 	}`)
 
 	organizationData.organization.repositories.nodes.map((repo) => {
-		console.log(repo.url)
+		cloneRepo(repo.url)
 	})
 }
 
@@ -55,6 +90,6 @@ for (const user of users) {
 	}`)
 
 	userData.user.repositories.nodes.map((repo) => {
-		console.log(repo.url)
+		cloneRepo(repo.url)
 	})
 }
