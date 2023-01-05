@@ -4,7 +4,7 @@ import fs from "fs"
 import path from "path"
 import "dotenv/config"
 
-const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN })
+const octokit = new Octokit({ auth: process.env.AUTH_TOKEN })
 const baseDir = process.env.BASE_DIR!
 
 interface OrganizationData {
