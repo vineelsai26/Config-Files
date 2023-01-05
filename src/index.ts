@@ -32,6 +32,7 @@ const orgs = ["VsTechDev"]
 const users = ["vineelsai26"]
 
 const cloneRepo = (url: string) => {
+	url = url.replace("https://github.com", `https://vineelsai26:${process.env.AUTH_TOKEN}@github.com`)
 	const repoPath = path.join(baseDir, url.split("/")[3], url.split("/")[4])
 	const repoGitPath = path.join(repoPath, ".git")
 	if (fs.existsSync(repoPath) && fs.existsSync(repoGitPath)) {
