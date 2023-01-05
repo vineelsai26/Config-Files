@@ -43,7 +43,7 @@ const cloneRepo = (url: string) => {
 			console.log(stdout)
 			console.log(stderr)
 		})
-	} else if (!fs.existsSync(repoGitPath)) {
+	} else if (fs.existsSync(repoPath) && !fs.existsSync(repoGitPath)) {
 		exec(`cd ${repoPath} && git clone ${url} .`, (err, stdout, stderr) => {
 			if (err) {
 				console.log(err)
