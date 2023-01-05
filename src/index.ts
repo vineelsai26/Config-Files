@@ -5,7 +5,7 @@ import path from "path"
 import "dotenv/config"
 
 const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN })
-const baseDir = "C:\\Users\\Vineel\\GoogleDrive\\GitHub"
+const baseDir = process.env.BASE_DIR!
 
 interface OrganizationData {
 	organization: {
@@ -38,6 +38,7 @@ const cloneRepo = (url: string) => {
 		exec(`cd ${repoPath} && git pull`, (err, stdout, stderr) => {
 			if (err) {
 				console.log(err)
+				process.exit(1)
 			}
 			console.log(stdout)
 			console.log(stderr)
@@ -46,6 +47,7 @@ const cloneRepo = (url: string) => {
 		exec(`cd ${repoPath} && git clone ${url} .`, (err, stdout, stderr) => {
 			if (err) {
 				console.log(err)
+				process.exit(1)
 			}
 			console.log(stdout)
 			console.log(stderr)
@@ -55,6 +57,7 @@ const cloneRepo = (url: string) => {
 		exec(`cd ${repoPath} && git clone ${url} .`, (err, stdout, stderr) => {
 			if (err) {
 				console.log(err)
+				process.exit(1)
 			}
 			console.log(stdout)
 			console.log(stderr)
