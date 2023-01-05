@@ -1,33 +1,37 @@
 name: Node.js Package
 
 on:
-  push:
-    branches: ["main"]
-  schedule:
-    - cron: "0 0 * * 5"
+    push:
+        branches: ["main"]
+    schedule:
+        - cron: "0 0 * * 5"
 
 env:
-  AUTH_TOKEN: ${{ secrets.AUTH_TOKEN }}
-  BASE_DIR: ${{ secrets.BASE_DIR }}
+    AUTH_TOKEN: ${{ secrets.AUTH_TOKEN }}
+    BASE_DIR: ${{ secrets.BASE_DIR }}
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-      - run: git lfs install --skip-smudge
-      - run: yarn
-      - run: yarn build
-      - run: yarn start
-      - uses: montudor/action-zip@v1
-        with:
-          args: zip -qq -r repos.zip repos
-      - name: Release
-        uses: softprops/action-gh-release@v1
-        with:
-          token: ${{ secrets.AUTH_TOKEN }}
-          files: |
-            repos.zip
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v3
+            - uses: actions/setup-node@v3
+              with:
+                  node-version: 18
+            - run: git lfs install --skip-smudge
+            - run: yarn
+            - run: yarn build
+            - run: yarn start
+
+            - uses: montudor/action-zip@v1
+              with:
+                  args: zip -qq -r repos.zip repos
+
+            - name: Upload to Google Drive
+              uses: adityak74/google-drive-upload-git-action@main
+              with:
+                  credentials: ${{ secrets.GOOGLE_DRIVE_CREDENTIALS }}
+                  filename: "repos.zip"
+                  folderId: ${{ secrets.FOLDER_ID }}
+                  name: "repos.zip" # optional string
+                  overwrite: "true" # optional boolean
