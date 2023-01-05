@@ -1,0 +1,32 @@
+name: Node.js Package
+
+on:
+  push:
+    branches: ["main"]
+  schedule:
+    - cron: "0 0 * * 5"
+
+env:
+  AUTH_TOKEN: ${{ secrets.AUTH_TOKEN }}
+  BASE_DIR: ${{ secrets.BASE_DIR }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - run: yarn
+      - run: yarn build
+      - run: yarn start
+      - uses: montudor/action-zip@v1
+        with:
+          args: zip -qq -r repos.zip repos
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          token: ${{ secrets.AUTH_TOKEN }}
+          files: |
+            repos.zip
