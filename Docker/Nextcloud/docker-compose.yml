@@ -50,6 +50,11 @@ volumes:
   db:
     name: nextcloud-db
 
+networks:
+  default:
+    external:
+      name: nginx
+
 secrets:
   nextcloud_admin_password:
     file: /home/ubuntu/nextcloud/nextcloud_admin_password.txt # put admin password in this file
