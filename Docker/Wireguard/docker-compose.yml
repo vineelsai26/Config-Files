@@ -21,7 +21,7 @@ services:
       - INTERNAL_SUBNET=10.13.13.0 `#optional`
       - ALLOWEDIPS=0.0.0.0/0 `#optional`
       - LOG_CONFS=true `#optional`
-
+    network_mode: host
     cap_add:
       - "NET_ADMIN"
       - "SYS_MODULE"
@@ -34,8 +34,3 @@ volumes:
     name: wireguard-modules
   config:
     name: wireguard-config
-
-networks:
-  default:
-    external:
-      name: host
