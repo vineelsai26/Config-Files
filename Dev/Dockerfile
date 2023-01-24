@@ -8,7 +8,7 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 RUN apt update && apt upgrade -y
 
 # Install Basic Tools
-RUN apt install git wget curl zsh ca-certificates gnupg lsb-release -y
+RUN apt install git wget curl zsh sudo tar ca-certificates gnupg lsb-release -y
 
 # Install Go
 WORKDIR /tmp

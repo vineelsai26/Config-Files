@@ -2,6 +2,8 @@ FROM ubuntu:latest
 
 RUN apt update && apt upgrade -y
 
+RUN apt install curl wget tar -y
+
 RUN GO_URL=https://go.dev/dl/$(wget -qO- https://go.dev/dl/ | grep -oP "go([0-9\.]+)\.linux-$(dpkg --print-architecture)\.tar\.gz" | head -n 1)
 RUN wget $GO_URL -O /tmp/go.tar.gz
 RUN tar -C /usr/local -xzf /tmp/go.tar.gz
