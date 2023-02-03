@@ -12,9 +12,6 @@ services:
     volumes:
       - data:/data
       - letsencrypt:/etc/letsencrypt
-    # networks:
-    #   - nginx_proxy_manager
-    #   - default
 
 volumes:
   data:
@@ -22,10 +19,7 @@ volumes:
   letsencrypt:
     name: nginx-proxy-manager-letsencrypt
 
-# networks:
-#   default:
-#     external:
-#       name: nginx
-#   nginx_proxy_manager:
-#     name: nginx_proxy_manager
-#     driver: bridge
+networks:
+  default:
+    external:
+      name: nginx
