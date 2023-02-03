@@ -18,3 +18,8 @@ volumes:
     name: nginx-proxy-manager-data
   letsencrypt:
     name: nginx-proxy-manager-letsencrypt
+
+networks:
+  default:
+    external:
+      name: nginx
