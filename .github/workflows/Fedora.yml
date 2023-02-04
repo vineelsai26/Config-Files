@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - "Fedora/*"
+      - "Docker/Containers/Fedora/*"
       - ".github/workflows/Fedora.yml"
   schedule:
     - cron: "0 0 * * 1"
@@ -36,4 +36,4 @@ jobs:
           platforms: linux/amd64, linux/arm64
           push: true
           tags: vineelsai/fedora:latest
-          file: ./Fedora/Dockerfile
+          file: ./Docker/Containers/Fedora/Dockerfile

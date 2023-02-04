@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - "Kali Linux/*"
+      - "Docker/Containers/Kali Linux/*"
       - ".github/workflows/Kali Linux.yml"
   schedule:
     - cron: "0 0 * * 1"
@@ -36,4 +36,4 @@ jobs:
           platforms: linux/amd64, linux/arm64
           push: true
           tags: vineelsai/kali:latest
-          file: ./Kali Linux/Dockerfile
+          file: ./Docker/Containers/Kali Linux/Dockerfile

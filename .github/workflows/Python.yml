@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - "Python/*"
+      - "Docker/Containers/Python/*"
       - ".github/workflows/Python.yml"
   schedule:
     - cron: "0 0 * * 1"
@@ -36,4 +36,4 @@ jobs:
           platforms: linux/amd64, linux/arm64
           push: true
           tags: vineelsai/python:latest
-          file: ./Python/Dockerfile
+          file: ./Docker/Containers/Python/Dockerfile

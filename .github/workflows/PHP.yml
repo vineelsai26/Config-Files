@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - "PHP/*"
+      - "Docker/Containers/PHP/*"
       - ".github/workflows/PHP.yml"
   schedule:
     - cron: "0 0 * * 1"
@@ -36,4 +36,4 @@ jobs:
           platforms: linux/amd64, linux/arm64
           push: true
           tags: vineelsai/php:latest
-          file: ./PHP/Dockerfile
+          file: ./Docker/Containers/PHP/Dockerfile

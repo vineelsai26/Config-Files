@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - "NodeJs/*"
+      - "Docker/Containers/NodeJs/*"
       - ".github/workflows/Node.yml"
   schedule:
     - cron: "0 0 * * 1"
@@ -36,4 +36,4 @@ jobs:
           platforms: linux/amd64, linux/arm64
           push: true
           tags: vineelsai/nodejs:latest
-          file: ./NodeJs/Dockerfile
+          file: ./Docker/Containers/NodeJs/Dockerfile
