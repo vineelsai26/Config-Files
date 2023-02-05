@@ -27,7 +27,7 @@ interface UserData {
 	}
 }
 
-const orgs = ["VsTechDev"]
+// const orgs = []
 
 const users = ["vineelsai26"]
 
@@ -66,21 +66,21 @@ const cloneRepo = (url: string) => {
 	}
 }
 
-for (const org of orgs) {
-	const organizationData: OrganizationData = await octokit.graphql(`query {
-		organization(login: "${org}") {
-			repositories(first: 100 ownerAffiliations: OWNER) {
-				nodes {
-					url
-				}
-			}
-		}
-	}`)
+// for (const org of orgs) {
+// 	const organizationData: OrganizationData = await octokit.graphql(`query {
+// 		organization(login: "${org}") {
+// 			repositories(first: 100 ownerAffiliations: OWNER) {
+// 				nodes {
+// 					url
+// 				}
+// 			}
+// 		}
+// 	}`)
 
-	organizationData.organization.repositories.nodes.map((repo) => {
-		cloneRepo(repo.url)
-	})
-}
+// 	organizationData.organization.repositories.nodes.map((repo) => {
+// 		cloneRepo(repo.url)
+// 	})
+// }
 
 for (const user of users) {
 	const userData: UserData = await octokit.graphql(`query {
