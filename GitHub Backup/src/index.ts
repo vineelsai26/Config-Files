@@ -32,7 +32,7 @@ interface UserData {
 
 const users = ["vineelsai26"]
 
-const cloneRepo = (url: string) => {
+const cloneRepo = async (url: string) => {
 	url = url.replace("https://github.com", `https://vineelsai26:${process.env.AUTH_TOKEN}@github.com`)
 	const repoPath = path.join(baseDir, url.split("/")[3], url.split("/")[4])
 	const repoGitPath = path.join(repoPath, ".git")
@@ -42,8 +42,7 @@ const cloneRepo = (url: string) => {
 				console.log(err)
 				process.exit(1)
 			}
-			console.log(stdout)
-			console.log(stderr)
+			console.log(stdout, stderr)
 		})
 	} else if (fs.existsSync(repoPath) && !fs.existsSync(repoGitPath)) {
 		exec(`cd ${repoPath} && git clone ${url} .`, (err, stdout, stderr) => {
@@ -51,8 +50,7 @@ const cloneRepo = (url: string) => {
 				console.log(err)
 				process.exit(1)
 			}
-			console.log(stdout)
-			console.log(stderr)
+			console.log(stdout, stderr)
 		})
 	} else {
 		fs.mkdirSync(repoPath, { recursive: true })
@@ -61,8 +59,7 @@ const cloneRepo = (url: string) => {
 				console.log(err)
 				process.exit(1)
 			}
-			console.log(stdout)
-			console.log(stderr)
+			console.log(stdout, stderr)
 		})
 	}
 }
@@ -95,9 +92,9 @@ const run = async () => {
 			}
 		}`)
 
-		userData.user.repositories.nodes.map((repo) => {
-			cloneRepo(repo.url)
-		})
+		for await (const repo of userData.user.repositories.nodes) {
+			await cloneRepo(repo.url)
+		}
 	}
 }
 
