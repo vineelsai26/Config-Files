@@ -40,30 +40,24 @@ const cloneRepo = async (url: string) => {
 	const repoPath = path.join(baseDir, url.split("/")[3], url.split("/")[4])
 	const repoGitPath = path.join(repoPath, ".git")
 	if (fs.existsSync(repoPath) && fs.existsSync(repoGitPath)) {
-		await execAsync(`cd ${repoPath} && git pull`, (err, stdout, stderr) => {
-			if (err) {
-				console.log(err)
-				process.exit(1)
-			}
-			console.log(stdout, stderr)
-		})
+		const { stdout, stderr } = await execAsync(`cd ${repoPath} && git pull`)
+		if (stderr) {
+			process.exit(1)
+		}
+		console.log(stdout, stderr)
 	} else if (fs.existsSync(repoPath) && !fs.existsSync(repoGitPath)) {
-		await execAsync(`cd ${repoPath} && git clone ${url} .`, (err, stdout, stderr) => {
-			if (err) {
-				console.log(err)
-				process.exit(1)
-			}
-			console.log(stdout, stderr)
-		})
+		const { stdout, stderr } = await execAsync(`cd ${repoPath} && git clone ${url} .`)
+		if (stderr) {
+			process.exit(1)
+		}
+		console.log(stdout, stderr)
 	} else {
 		fs.mkdirSync(repoPath, { recursive: true })
-		await execAsync(`cd ${repoPath} && git clone ${url} .`, (err, stdout, stderr) => {
-			if (err) {
-				console.log(err)
-				process.exit(1)
-			}
-			console.log(stdout, stderr)
-		})
+		const { stdout, stderr } = await execAsync(`cd ${repoPath} && git clone ${url} .`)
+		if (stderr) {
+			process.exit(1)
+		}
+		console.log(stdout, stderr)
 	}
 }
 
