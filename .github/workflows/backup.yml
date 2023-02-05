@@ -28,18 +28,12 @@ jobs:
                   yarn
                   yarn build
                   yarn start
-                  ls -AR
-
-            - name: Zip Backup
-              uses: montudor/action-zip@v1
-              with:
-                  args: zip -qq -r repos.zip 'GitHub Backup/repos'
 
             - name: Upload to Google Drive
               uses: adityak74/google-drive-upload-git-action@main
               with:
                   credentials: ${{ secrets.GOOGLE_DRIVE_CREDENTIALS }}
-                  filename: "repos.zip"
+                  filename: "GitHub Backup/repos.zip"
                   folderId: ${{ secrets.FOLDER_ID }}
                   name: "repos.zip" # optional string
                   overwrite: "true" # optional boolean
