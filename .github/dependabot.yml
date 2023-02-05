@@ -6,13 +6,22 @@
 version: 2
 updates:
     - package-ecosystem: "npm" # See documentation for possible values
-      directory: "/" # Location of package manifests
+      directory: "/GitHub Backup/" # Location of package manifests
       schedule:
           interval: "weekly"
       assignees:
           - "vineelsai26"
       commit-message:
           prefix: "npm"
+
+    - package-ecosystem: "pip" # See documentation for possible values
+      directory: "/GitHub Issues Keep Notes Sync/" # Location of package manifests
+      schedule:
+          interval: "weekly"
+      assignees:
+          - "vineelsai26"
+      commit-message:
+          prefix: "pip"
 
     - package-ecosystem: "github-actions" # See documentation for possible values
       directory: "/" # Location of package manifests
