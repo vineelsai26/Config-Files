@@ -41,22 +41,13 @@ const cloneRepo = async (url: string) => {
 	const repoGitPath = path.join(repoPath, ".git")
 	if (fs.existsSync(repoPath) && fs.existsSync(repoGitPath)) {
 		const { stdout, stderr } = await execAsync(`cd ${repoPath} && git pull`)
-		if (stderr) {
-			process.exit(1)
-		}
 		console.log(stdout, stderr)
 	} else if (fs.existsSync(repoPath) && !fs.existsSync(repoGitPath)) {
 		const { stdout, stderr } = await execAsync(`cd ${repoPath} && git clone ${url} .`)
-		if (stderr) {
-			process.exit(1)
-		}
 		console.log(stdout, stderr)
 	} else {
 		fs.mkdirSync(repoPath, { recursive: true })
 		const { stdout, stderr } = await execAsync(`cd ${repoPath} && git clone ${url} .`)
-		if (stderr) {
-			process.exit(1)
-		}
 		console.log(stdout, stderr)
 	}
 }
