@@ -22,5 +22,5 @@ repos = {
     'vineelsai26/Blog': {
         'title': 'Blog',
         'type': 'user',
-    },
+    }
 }
