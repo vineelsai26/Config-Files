@@ -9,7 +9,17 @@ RUN apt update && apt upgrade -y
 
 RUN apt install curl git -y
 
-RUN git clone https://github.com/jasongin/nvs "$NVS_HOME" && . "$NVS_HOME/nvs.sh" install && nvs add lts && nvs use lts && nvs link lts
+RUN git clone https://github.com/jasongin/nvs "$NVS_HOME"
+
+RUN . "$NVS_HOME/nvs.sh" install
+
+ENV PATH "$NVS_HOME:$PATH"
+
+RUN nvs add lts
+
+RUN nvs use lts
+
+RUN nvs link lts
 
 RUN apt install npm -y
 
