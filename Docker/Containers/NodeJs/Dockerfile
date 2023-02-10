@@ -17,11 +17,13 @@ RUN . "$NVS_HOME/nvs.sh" install
 
 RUN nvs add lts
 
-RUN nvs use lts
+RUN . "$NVS_HOME/nvs.sh" install && nvs use lts
 
-RUN nvs link lts
+# RUN . "$NVS_HOME/nvs.sh" install && nvs link lts
 
-RUN apt install npm -y
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
+
+RUN apt install nodejs -y
 
 RUN npm i -g npm
 
