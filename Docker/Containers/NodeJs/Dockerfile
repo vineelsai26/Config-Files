@@ -11,9 +11,9 @@ RUN apt install curl git -y
 
 RUN git clone https://github.com/jasongin/nvs "$NVS_HOME"
 
-RUN . "$NVS_HOME/nvs.sh" install
-
 ENV PATH "$NVS_HOME:$PATH"
+
+RUN . "$NVS_HOME/nvs.sh" install
 
 RUN nvs add lts
 
