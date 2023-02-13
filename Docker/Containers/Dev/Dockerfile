@@ -32,17 +32,19 @@ RUN apt install default-jre default-jdk -y
 RUN apt install gcc g++ clang lldb lld -y
 
 # Install NodeJS
-ENV NVM_DIR /root/.nvm
-ENV NODE_VERSION 18.13.0
+RUN git clone https://github.com/jasongin/nvs "$NVS_HOME"
 
-RUN apt install curl -y
+ENV PATH "$NVS_HOME:$PATH"
 
-RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash && . $NVM_DIR/nvm.sh && nvm install $NODE_VERSION && nvm use $NODE_VERSION
+RUN . "$NVS_HOME/nvs.sh" install
 
-ENV NODE_PATH $NVM_DIR/v$NODE_VERSION/lib/node_modules
-ENV PATH $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
+RUN nvs add lts
 
-RUN apt install npm -y
+RUN . "$NVS_HOME/nvs.sh" install && nvs use lts
+
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
+
+RUN apt install nodejs -y
 
 RUN npm i -g npm
 
