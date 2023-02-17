@@ -7,11 +7,19 @@ services:
       - 3000:3000
     volumes:
       - data:/data
+      - backup:/backup
     environment:
       - RUN_CROND=true
-      - BACKUP_INTERVAL=7d
-      - BACKUP_RETENTION=6m
+      - BACKUP_INTERVAL=3d
+      - BACKUP_RETENTION=7d
 
 volumes:
   data:
     name: gogs_data
+  backup:
+    name: gogs_backup
+
+networks:
+  default:
+    external:
+      name: nginx
