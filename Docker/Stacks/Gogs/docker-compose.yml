@@ -12,6 +12,8 @@ services:
       - RUN_CROND=true
       - BACKUP_INTERVAL=3d
       - BACKUP_RETENTION=7d
+      - FILE_MAX_SIZE=500
+      - MAX_FILES=500
 
 volumes:
   data:
