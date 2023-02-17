@@ -1,0 +1,17 @@
+version: "3"
+services:
+  gogs:
+    container_name: gogs
+    image: gogs/gogs
+    ports:
+      - 3000:3000
+    volumes:
+      - data:/data
+    environment:
+      - RUN_CROND=true
+      - BACKUP_INTERVAL=7d
+      - BACKUP_RETENTION=6m
+
+volumes:
+  data:
+    name: gogs_data
