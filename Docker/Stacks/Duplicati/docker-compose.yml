@@ -1,0 +1,54 @@
+version: "2.1"
+services:
+  duplicati:
+    image: lscr.io/linuxserver/duplicati:latest
+    container_name: duplicati
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+      - CLI_ARGS= #optional
+    volumes:
+      - source:/source
+      - config:/config
+      - backups:/backups
+      - gogs_data:/source/gogs_data
+      - uptime-kuma:/source/uptime-kuma
+      - nextcloud-db:/source/nextcloud-db
+      - nextcloud-data:/source/nextcloud-data
+      - portainer_data:/source/portainer_data
+      - nginx-proxy-manager-data:/source/nginx-proxy-manager-data
+    ports:
+      - 8200:8200
+    restart: unless-stopped
+
+volumes:
+  config:
+    name: duplicati_config
+  backups:
+    name: duplicati_backups
+  source:
+    name: duplicati_source
+  gogs_data:
+    name: gogs_data
+    external: true
+  uptime-kuma:
+    name: uptime-kuma
+    external: true
+  nextcloud-db:
+    name: nextcloud-db
+    external: true
+  nextcloud-data:
+    name: nextcloud-data
+    external: true
+  portainer_data:
+    name: portainer_data
+    external: true
+  nginx-proxy-manager-data:
+    name: nginx-proxy-manager-data
+    external: true
+
+networks:
+  default:
+    external:
+      name: nginx
