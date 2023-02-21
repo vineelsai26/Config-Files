@@ -1,21 +1,25 @@
 import { Octokit } from "octokit"
+import util from "util"
 import { exec } from "child_process"
 import fs from "fs"
 import path from "path"
+import AdmZip from 'adm-zip'
 import "dotenv/config"
 
 const octokit = new Octokit({ auth: process.env.AUTH_TOKEN })
 const baseDir = process.env.BASE_DIR!
 
-interface OrganizationData {
-	organization: {
-		repositories: {
-			nodes: Array<{
-				url: string
-			}>
-		}
-	}
-}
+const execAsync = util.promisify(exec)
+
+// interface OrganizationData {
+// 	organization: {
+// 		repositories: {
+// 			nodes: Array<{
+// 				url: string
+// 			}>
+// 		}
+// 	}
+// }
 
 interface UserData {
 	user: {
@@ -31,38 +35,20 @@ interface UserData {
 
 const users = ["vineelsai26"]
 
-const cloneRepo = (url: string) => {
+const cloneRepo = async (url: string) => {
 	url = url.replace("https://github.com", `https://vineelsai26:${process.env.AUTH_TOKEN}@github.com`)
 	const repoPath = path.join(baseDir, url.split("/")[3], url.split("/")[4])
 	const repoGitPath = path.join(repoPath, ".git")
 	if (fs.existsSync(repoPath) && fs.existsSync(repoGitPath)) {
-		exec(`cd ${repoPath} && git pull`, (err, stdout, stderr) => {
-			if (err) {
-				console.log(err)
-				process.exit(1)
-			}
-			console.log(stdout)
-			console.log(stderr)
-		})
+		const { stdout, stderr } = await execAsync(`cd ${repoPath} && git pull`)
+		console.log(stdout, stderr)
 	} else if (fs.existsSync(repoPath) && !fs.existsSync(repoGitPath)) {
-		exec(`cd ${repoPath} && git clone ${url} .`, (err, stdout, stderr) => {
-			if (err) {
-				console.log(err)
-				process.exit(1)
-			}
-			console.log(stdout)
-			console.log(stderr)
-		})
+		const { stdout, stderr } = await execAsync(`cd ${repoPath} && git clone ${url} .`)
+		console.log(stdout, stderr)
 	} else {
 		fs.mkdirSync(repoPath, { recursive: true })
-		exec(`cd ${repoPath} && git clone ${url} .`, (err, stdout, stderr) => {
-			if (err) {
-				console.log(err)
-				process.exit(1)
-			}
-			console.log(stdout)
-			console.log(stderr)
-		})
+		const { stdout, stderr } = await execAsync(`cd ${repoPath} && git clone ${url} .`)
+		console.log(stdout, stderr)
 	}
 }
 
@@ -82,18 +68,30 @@ const cloneRepo = (url: string) => {
 // 	})
 // }
 
-for (const user of users) {
-	const userData: UserData = await octokit.graphql(`query {
-		user(login: "${user}") {
-			repositories(first: 100 ownerAffiliations: OWNER) {
-				nodes {
-					url
+const run = async () => {
+	for await (const user of users) {
+		const userData: UserData = await octokit.graphql(`query {
+			user(login: "${user}") {
+				repositories(first: 100 ownerAffiliations: OWNER) {
+					nodes {
+						url
+					}
 				}
 			}
-		}
-	}`)
+		}`)
 
-	userData.user.repositories.nodes.map((repo) => {
-		cloneRepo(repo.url)
-	})
+		for await (const repo of userData.user.repositories.nodes) {
+			await cloneRepo(repo.url)
+		}
+	}
+}
+
+await run()
+
+try {
+	const zip = new AdmZip()
+	zip.addLocalFolder(baseDir)
+	zip.writeZip("repos.zip")
+} catch (err) {
+	console.error(err)
 }

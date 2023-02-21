@@ -12,9 +12,11 @@
 		"dev": "yarn watch | nodemon --watch dist dist/index.js"
 	},
 	"dependencies": {
+		"adm-zip": "^0.5.10",
 		"octokit": "^2.0.10"
 	},
 	"devDependencies": {
+		"@types/adm-zip": "^0.5.0",
 		"dotenv": "^16.0.3",
 		"nodemon": "^2.0.20",
 		"typescript": "^4.9.4"

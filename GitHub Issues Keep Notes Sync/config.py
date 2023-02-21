@@ -23,4 +23,8 @@ repos = {
         'title': 'Blog',
         'type': 'user',
     },
+    'vineelsai26/RCE': {
+        'title': 'RCE',
+        'type': 'user',
+    }
 }
