@@ -12,6 +12,7 @@
 		"dev": "yarn watch | nodemon --watch dist dist/index.js"
 	},
 	"dependencies": {
+		"@aws-sdk/client-s3": "^3.276.0",
 		"adm-zip": "^0.5.10",
 		"octokit": "^2.0.10"
 	},
