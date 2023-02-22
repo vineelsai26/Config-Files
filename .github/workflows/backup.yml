@@ -41,7 +41,7 @@ jobs:
               run: terraform plan -out=plan
             - name: Terraform Apply
               working-directory: GitHub Backup/terraform
-              run: terraform apply plan -input=false
+              run: terraform apply -state=plan -input=false
             - name: Sleep
               run: sleep 2h
             - name: Terraform Destroy
