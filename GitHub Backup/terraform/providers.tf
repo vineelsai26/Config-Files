@@ -1,11 +1,4 @@
 terraform {
-  cloud {
-    organization = "vineelsai"
-
-    workspaces {
-      name = "create-aws-ec2-workspace"
-    }
-  }
   required_providers {
     aws = {
       source  = "hashicorp/aws"
