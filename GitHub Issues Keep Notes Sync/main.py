@@ -1,3 +1,10 @@
+"""
+* GitHub Issues Keep Notes Sync
+* Syncs GitHub issues to Google Keep notes
+* Requires a GitHub personal access token
+* Requires a Google account and password
+"""
+
 import os
 import gkeepapi
 import requests
@@ -38,7 +45,7 @@ for repo in repos.items():
         item = f"{issue['title']} - {issue['html_url']}"
         for listItem in note.items:
             if listItem.text == item:
-                listItem.checked = (issue['state'] == 'closed')
+                listItem.checked = issue['state'] == 'closed'
                 break
         else:
             note.add(
