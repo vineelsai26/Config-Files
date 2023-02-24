@@ -71,30 +71,24 @@ const run = async () => {
 await run()
 
 try {
-    const zip = new AdmZip()
-    zip.addLocalFolder(baseDir)
-    zip.writeZip("repos.zip", (err) => {
+    await execAsync(`tar -cfz repos.zip repos`, {
+        maxBuffer: 1024 * 1024 * 1024
+    })
+    const backup = fs.createReadStream("repos.zip")
+
+    const params = {
+        Bucket: process.env.AWS_BUCKET!,
+        Key: "GitHub/repos.zip",
+        Body: backup,
+        StorageClass: "DEEP_ARCHIVE"
+    }
+
+    client.send(new PutObjectCommand(params), (err, _) => {
         if (err) {
             console.error(err)
             process.exit(1)
         } else {
-            const backup = fs.createReadStream("repos.zip")
-
-            const params = {
-                Bucket: process.env.AWS_BUCKET!,
-                Key: "GitHub/repos.zip",
-                Body: backup,
-                StorageClass: "DEEP_ARCHIVE"
-            }
-
-            client.send(new PutObjectCommand(params), (err, _) => {
-                if (err) {
-                    console.error(err)
-                    process.exit(1)
-                } else {
-                    console.log("Backup successful")
-                }
-            })
+            console.log("Backup successful")
         }
     })
 } catch (err) {
