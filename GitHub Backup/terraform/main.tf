@@ -12,17 +12,15 @@ resource "aws_instance" "ec2-instance" {
   user_data = <<-EOF
                 #!/bin/bash
                 sudo apt update
-                sudo apt upgrade -y
                 curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash -
                 sudo apt install -y nodejs
                 sudo apt install -y git
-                sudo apt install -y npm
-                npm install -g yarn
+                sudo npm install -g yarn
                 git clone https://github.com/vineelsai26/Automations
                 cd 'Automations/GitHub Backup'
                 git lfs install --skip-smudge
+                export BASE_DIR='repos'
                 export AUTH_TOKEN=${var.github_token}
-                export BASE_DIR=repos
                 export AWS_ACCESS_KEY_ID=${var.aws_access_key}
                 export AWS_SECRET_ACCESS_KEY=${var.aws_secret_key}
                 export AWS_REGION=${var.aws_region}
