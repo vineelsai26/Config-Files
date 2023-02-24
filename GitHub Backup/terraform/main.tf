@@ -1,7 +1,7 @@
 # Create a EC2 instance
 resource "aws_instance" "ec2-instance" {
   ami               = "ami-062df10d14676e201"
-  instance_type     = "t4g.xlarge"
+  instance_type     = "t3.2xlarge"
   availability_zone = var.aws_region_az
   key_name          = "AWS"
 
