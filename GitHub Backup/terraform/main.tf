@@ -6,12 +6,16 @@ resource "aws_instance" "ec2-instance" {
   key_name          = "AWS"
 
   root_block_device {
-    volume_size = 800
+    volume_size = 400
   }
 
   user_data = <<-EOF
                 #!/bin/bash
                 sudo apt update
+                sudo fallocate -l 16G /swapfile
+                sudo chmod 600 /swapfile
+                sudo mkswap /swapfile
+                sudo swapon /swapfile
                 curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash -
                 sudo apt install -y nodejs
                 sudo apt install -y git git-lfs tar gzip
