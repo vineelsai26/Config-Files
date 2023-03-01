@@ -74,13 +74,16 @@ try {
         maxBuffer: 1024 * 1024 * 1024
     })
 
-    for (let file in fs.readdirSync(".")) {
+    const files = fs.readdirSync(".")
+
+    files.forEach((file) => {
         if (file.startsWith("repos.tar.gz")) {
             const backup = fs.createReadStream(file)
 
+            const date = new Date().getUTCDate() + "-" + (new Date().getUTCMonth() + 1) + "-" + new Date().getUTCFullYear()
             const params = {
                 Bucket: process.env.AWS_BUCKET!,
-                Key: "GitHub/Backup/" + file,
+                Key: `GitHub/Backup-${date}/${file}`,
                 Body: backup,
                 StorageClass: "DEEP_ARCHIVE"
             }
@@ -94,7 +97,7 @@ try {
                 }
             })
         }
-    }
+    })
 } catch (err) {
     console.error(err)
 }

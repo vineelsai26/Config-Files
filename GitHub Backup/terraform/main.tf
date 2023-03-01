@@ -18,7 +18,7 @@ resource "aws_instance" "ec2-instance" {
                 sudo swapon /swapfile
                 curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash -
                 sudo apt install -y nodejs
-                sudo apt install -y git git-lfs tar gzip
+                sudo apt install -y git git-lfs tar pigz
                 sudo npm install -g yarn
                 git clone https://github.com/vineelsai26/Automations
                 cd 'Automations/GitHub Backup'
