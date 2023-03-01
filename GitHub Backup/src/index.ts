@@ -4,7 +4,6 @@ import fs from "fs"
 import path from "path"
 import util from "util"
 
-import AdmZip from 'adm-zip'
 import { Octokit } from "octokit"
 import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3"
 
@@ -71,7 +70,7 @@ const run = async () => {
 await run()
 
 try {
-    await execAsync(`tar -czf - repos | split --bytes=1GB - repos.tar.gz`, {
+    await execAsync(`tar --use-compress-program=pigz -cf - repos | split --bytes=2GB - repos.tar.gz`, {
         maxBuffer: 1024 * 1024 * 1024
     })
 
