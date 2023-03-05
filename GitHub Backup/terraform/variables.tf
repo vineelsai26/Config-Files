@@ -32,3 +32,18 @@ variable "aws_bucket_region" {
   description = "AWS Bucket Region"
   type        = string
 }
+
+variable "vpc_cidr_block" {
+  description = "VPC CIDR Block"
+  type        = string
+}
+
+variable "subnet_cidr_block" {
+  description = "Subnet CIDR Block"
+  type        = string
+}
+
+variable "private_ip" {
+  description = "Private IP for EC2"
+  type        = string
+}
