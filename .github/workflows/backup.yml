@@ -43,7 +43,7 @@ jobs:
               working-directory: GitHub Backup/terraform
               run: terraform apply -auto-approve -input=false
             - name: Sleep
-              run: sleep 2h
+              run: sleep 4h
             - name: Terraform Destroy
               working-directory: GitHub Backup/terraform
               run: terraform destroy -auto-approve
