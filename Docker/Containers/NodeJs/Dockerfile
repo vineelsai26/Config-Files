@@ -21,7 +21,7 @@ RUN . "$NVS_HOME/nvs.sh" install && nvs use lts
 
 # RUN . "$NVS_HOME/nvs.sh" install && nvs link lts
 
-RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
+RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash -
 
 RUN apt install nodejs -y
 
