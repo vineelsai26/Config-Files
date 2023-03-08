@@ -59,22 +59,6 @@ resource "aws_security_group" "security_group" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  ingress {
-    description = "HTTP"
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
-    description = "HTTPS"
-    from_port   = 443
-    to_port     = 443
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
   egress {
     from_port   = 0
     to_port     = 0
@@ -95,20 +79,10 @@ resource "aws_network_interface" "network_interface" {
   security_groups = [aws_security_group.security_group.id]
 }
 
-# Create an Elastic IP
-resource "aws_eip" "eip" {
-  vpc                       = true
-  network_interface         = aws_network_interface.network_interface.id
-  associate_with_private_ip = var.private_ip
-  depends_on = [
-    aws_network_interface.network_interface
-  ]
-}
-
 # Create a EC2 instance
 resource "aws_instance" "ec2-instance" {
   ami               = "ami-062df10d14676e201"
-  instance_type     = "t3.2xlarge"
+  instance_type     = "t3.micro"
   availability_zone = var.aws_region_az
   key_name          = "AWS"
 
@@ -124,11 +98,11 @@ resource "aws_instance" "ec2-instance" {
   user_data = <<-EOF
                 #!/bin/bash
                 sudo apt update
-                sudo fallocate -l 16G /swapfile
+                sudo fallocate -l 2G /swapfile
                 sudo chmod 600 /swapfile
                 sudo mkswap /swapfile
                 sudo swapon /swapfile
-                curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+                curl -sL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
                 sudo apt install -y nodejs
                 sudo apt install -y git git-lfs tar pigz
                 sudo npm install -g yarn
@@ -136,11 +110,11 @@ resource "aws_instance" "ec2-instance" {
                 cd 'Automations/GitHub Backup'
                 git lfs install --skip-smudge
                 export BASE_DIR='repos'
-                export AUTH_TOKEN=${var.github_token}
-                export AWS_ACCESS_KEY_ID=${var.aws_access_key}
-                export AWS_SECRET_ACCESS_KEY=${var.aws_secret_key}
-                export AWS_REGION=${var.aws_region}
-                export AWS_BUCKET=${var.aws_bucket_name}
+                export AUTH_TOKEN="${var.github_token}"
+                export AWS_ACCESS_KEY_ID="${var.aws_access_key}"
+                export AWS_SECRET_ACCESS_KEY="${var.aws_secret_key}"
+                export AWS_REGION="${var.aws_region}"
+                export AWS_BUCKET="${var.aws_bucket_name}"
                 yarn
                 yarn build
                 yarn start
