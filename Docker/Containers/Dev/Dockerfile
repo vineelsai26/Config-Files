@@ -40,6 +40,8 @@ ENV PATH "$NVS_HOME:$PATH"
 
 RUN . "$NVS_HOME/nvs.sh" install && nvs add lts && nvs use lts
 
+RUN apt install npm -y
+
 RUN npm i -g npm
 
 RUN npm i -g yarn
