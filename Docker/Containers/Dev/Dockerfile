@@ -32,14 +32,6 @@ RUN apt install default-jre default-jdk -y
 RUN apt install gcc g++ clang lldb lld -y
 
 # Install NodeJS
-ENV NVS_HOME "$HOME/.nvs"
-
-RUN git clone --depth 1 https://github.com/jasongin/nvs "$NVS_HOME"
-
-ENV PATH "$NVS_HOME:$PATH"
-
-RUN . "$NVS_HOME/nvs.sh" install && nvs add lts && nvs use lts
-
 RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash -
 
 RUN apt install nodejs -y
