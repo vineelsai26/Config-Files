@@ -36,7 +36,10 @@ res = requests.post(
     timeout=10
 ).json()
 
-print(res.get('full_name'))
+if res.get('full_name'):
+    print(f"Successfully created repository {res.get('full_name')}")
+else:
+    print(f"Failed to create repository {res.get('message')}")
 
 input("Disable actions from repo settings and Press Enter to continue...")
 

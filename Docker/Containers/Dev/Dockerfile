@@ -40,7 +40,9 @@ ENV PATH "$NVS_HOME:$PATH"
 
 RUN . "$NVS_HOME/nvs.sh" install && nvs add lts && nvs use lts
 
-RUN apt install npm -y
+RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash -
+
+RUN apt install nodejs -y
 
 RUN npm i -g npm
 
