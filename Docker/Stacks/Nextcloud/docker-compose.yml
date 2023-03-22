@@ -20,6 +20,7 @@ services:
     container_name: nextcloud
     image: nextcloud:latest
     restart: always
+    entrypoint: sh -c 'apt update && apt install cron -y'
     ports:
       - 8080:80
     links:
