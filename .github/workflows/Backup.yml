@@ -5,7 +5,7 @@ on:
         branches: ["main"]
         paths:
             - "Automations/GitHub Backup/**"
-            - ".github/workflows/backup.yml"
+            - ".github/workflows/Backup.yml"
     schedule:
         - cron: "0 0 1 * *"
 
