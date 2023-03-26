@@ -11,14 +11,14 @@ on:
 
 env:
     AUTH_TOKEN: ${{ secrets.TF_AUTH_TOKEN }}
-    BASE_DIR: ${{ secrets.BASE_DIR }}
+    BASE_DIR: ${{ vars.BASE_DIR }}
     TF_VAR_github_token: ${{ secrets.AUTH_TOKEN }}
-    TF_VAR_aws_bucket_name: ${{ secrets.AWS_BUCKET_NAME }}
-    TF_VAR_aws_bucket_region: ${{ secrets.AWS_BUCKET_REGION }}
+    TF_VAR_aws_bucket_name: ${{ vars.AWS_BUCKET_NAME }}
+    TF_VAR_aws_bucket_region: ${{ vars.AWS_BUCKET_REGION }}
     TF_VAR_aws_access_key: ${{ secrets.AWS_ACCESS_KEY }}
     TF_VAR_aws_secret_key: ${{ secrets.AWS_SECRET_KEY }}
-    TF_VAR_aws_region: ${{ secrets.AWS_REGION }}
-    TF_VAR_aws_region_az: ${{ secrets.AWS_REGION_AZ }}
+    TF_VAR_aws_region: ${{ vars.AWS_REGION }}
+    TF_VAR_aws_region_az: ${{ vars.AWS_REGION_AZ }}
     TF_VAR_vpc_cidr_block: 10.0.0.0/16
     TF_VAR_subnet_cidr_block: 10.0.1.0/24
     TF_VAR_private_ip: 10.0.1.10
