@@ -3,6 +3,7 @@ services:
   gogs:
     container_name: gogs
     image: gogs/gogs
+    restart: unless-stopped
     ports:
       - 3000:3000
     volumes:
