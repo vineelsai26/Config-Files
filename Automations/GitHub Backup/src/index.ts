@@ -30,7 +30,19 @@ interface UserData {
     }
 }
 
+interface OrganizationData {
+	organization: {
+		repositories: {
+			nodes: Array<{
+				url: string
+			}>
+		}
+	}
+}
+
 const users = ["vineelsai26"]
+
+const orgs = ["VSArchive", "VSWSL"]
 
 const cloneRepo = async (url: string) => {
     url = url.replace("https://github.com", `https://vineelsai26:${process.env.AUTH_TOKEN}@github.com`)
@@ -65,6 +77,22 @@ const run = async () => {
             await cloneRepo(repo.url)
         }
     }
+
+	for await (const org of orgs) {
+		const organizationData: OrganizationData = await octokit.graphql(`query {
+			organization(login: "${org}") {
+				repositories(first: 100 ownerAffiliations: OWNER) {
+					nodes {
+						url
+					}
+				}
+			}
+		}`)
+
+		organizationData.organization.repositories.nodes.map((repo) => {
+			cloneRepo(repo.url)
+		})
+	}
 }
 
 await run()
