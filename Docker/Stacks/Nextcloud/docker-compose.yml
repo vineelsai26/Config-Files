@@ -26,7 +26,9 @@ services:
     links:
       - db
     volumes:
-      - data:/var/www/html
+      - code:/var/www/html
+      - config:/var/www/html/config
+      - /mnt/nextcloud/data:/var/www/html/data
     environment:
       - POSTGRES_HOST=db
       - POSTGRES_DB_FILE=/run/secrets/postgres_db
@@ -46,8 +48,10 @@ services:
       - postgres_user
 
 volumes:
-  data:
-    name: nextcloud-data
+  code:
+    name: nextcloud
+  config:
+    name: nextcloud-config
   db:
     name: nextcloud-db
 
@@ -58,12 +62,12 @@ networks:
 
 secrets:
   nextcloud_admin_password:
-    file: /home/ubuntu/nextcloud/nextcloud_admin_password.txt # put admin password in this file
+    file: /mnt/nextcloud/secretes/nextcloud_admin_password.txt # put admin password in this file
   nextcloud_admin_user:
-    file: /home/ubuntu/nextcloud/nextcloud_admin_user.txt # put admin username in this file
+    file: /mnt/nextcloud/secretes/nextcloud_admin_user.txt # put admin username in this file
   postgres_db:
-    file: /home/ubuntu/nextcloud/postgres_db.txt # put postgresql db name in this file
+    file: /mnt/nextcloud/secretes/postgres_db.txt # put postgresql db name in this file
   postgres_password:
-    file: /home/ubuntu/nextcloud/postgres_password.txt # put postgresql password in this file
+    file: /mnt/nextcloud/secretes/postgres_password.txt # put postgresql password in this file
   postgres_user:
-    file: /home/ubuntu/nextcloud/postgres_user.txt # put postgresql username in this file
+    file: /mnt/nextcloud/secretes/postgres_user.txt # put postgresql username in this file
