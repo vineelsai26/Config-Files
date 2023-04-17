@@ -19,8 +19,3 @@ volumes:
     name: gogs_data
   backup:
     name: gogs_backup
-
-networks:
-  default:
-    external:
-      name: nginx
