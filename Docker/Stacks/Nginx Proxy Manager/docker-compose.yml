@@ -10,8 +10,8 @@ services:
       - '81:81'
       - '443:443'
     volumes:
-      - /home/vinee/docker/nginx/data:/data
-      - /home/vinee/docker/nginx/letsencrypt:/etc/letsencrypt
+      - ./docker/nginx/data:/data
+      - ./docker/nginx/letsencrypt:/etc/letsencrypt
 
 networks:
   default:
