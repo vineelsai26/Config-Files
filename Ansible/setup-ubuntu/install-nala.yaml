@@ -1,0 +1,40 @@
+---
+- name: Docker Setup
+  hosts: all
+  tasks:
+	- name: Download Nala keyring
+	  ansible.builtin.get_url:
+		url: https://gitlab.com/volian/volian-archive/uploads/b20bd8237a9b20f5a82f461ed0704ad4/volian-archive-keyring_0.1.0_all.deb
+		dest: /tmp/volian-archive-keyring_0.1.0_all.deb
+
+	- name: Download Nala repo
+	  ansible.builtin.get_url:
+		url: https://gitlab.com/volian/volian-archive/uploads/d6b3a118de5384a0be2462905f7e4301/volian-archive-nala_0.1.0_all.deb
+		dest: /tmp/volian-archive-nala_0.1.0_all.deb
+
+	- name: Install Nala keyring
+	  ansible.builtin.apt:
+		deb: /tmp/volian-archive-keyring_0.1.0_all.deb
+		state: present
+
+	- name: Install Repo
+	  ansible.builtin.apt:
+		deb: /tmp/volian-archive-nala_0.1.0_all.deb
+		state: present
+
+	- name: Install Nala
+	  ansible.builtin.apt:
+		name: nala
+		state: present
+
+	- name: Delete Nala keyring file
+	  ansible.builtin.file:
+		path: /tmp/volian-archive-keyring_0.1.0_all.deb
+		state: absent
+
+	- name: Delete Nala repo file
+	  ansible.builtin.file:
+		path: /tmp/volian-archive-nala_0.1.0_all.deb
+		state: absent
+
+---

@@ -1,0 +1,14 @@
+---
+- name: Docker Essential Containers Setup
+  hosts: all
+  tasks:
+      - name: Deploy Portainer
+        community.docker.docker_container:
+            name: portainer
+            image: portainer/portainer-ce
+            ports:
+                - "9443:9443"
+            volumes:
+                - /var/run/docker.sock:/var/run/docker.sock
+                - portainer_data:/data
+            restart_policy: always
