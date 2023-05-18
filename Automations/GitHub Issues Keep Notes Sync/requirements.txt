@@ -1,3 +1,0 @@
-gkeepapi==0.14.2
-requests==2.28.2
-python-dotenv==0.21.1
